@@ -1,0 +1,19 @@
+1. New structure User: int userId, string name, string password
+2. New func void loginScreen();
+2* call func to load users from file usersList.txt (if exists)
+2** call func loginScreenMenu();
+-login scren UI
+2.1 sign in:
+-ask for username
+-ask for passowrd
+-call function to verify both with file/vector
+-if correct call what use to be in main 
+*all from main have to be shifted to new func.
+-if not allow to try again or exit back to login screen
+2.2 sign up
+-ask for new username
+-ask for new password
+-add user to vector<User> usersList;
+-store added user in userLists.txt
+2.3 exit
+-exit
