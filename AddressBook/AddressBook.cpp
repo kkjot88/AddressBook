@@ -20,6 +20,12 @@ struct ContactListEntry {
     string phone;
 };
 
+struct User {
+    int id;
+    string name;
+    string password;
+};
+
 vector<ContactListEntry> loadFromFile();
 ContactListEntry splitFileLineToVector(string fileLine);
 void mainMenu();
