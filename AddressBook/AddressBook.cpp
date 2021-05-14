@@ -26,6 +26,7 @@ struct User {
     string password;
 };
 
+vector<User> loadUsersListFromFile();
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToVector(string fileLine);
 void mainMenu();
@@ -44,6 +45,23 @@ void showContactToEditOrDelete(ContactListEntry entryToShow);
 void editEntry(vector<ContactListEntry>& contactList);
 ContactListEntry editGivenContact(ContactListEntry contactToEdit);
 void editInFile(ContactListEntry contactToEdit);
+
+vector<User> loadUsersListFromFile()
+{
+    vector<User> usersList;
+    fstream file;
+    string fileLine;
+
+    file.open("usersList.txt", ios::in);
+    if (file.good() == 0) return usersList;
+
+    while (getline(file, fileLine)) {
+        usersList.push_back(splitFileLineToVector(fileLine));
+    }
+
+    file.close();
+    return usersList;
+}
 
 vector<ContactListEntry> loadContactListFromFile()
 {
