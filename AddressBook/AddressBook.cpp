@@ -26,7 +26,7 @@ struct User {
     string password;
 };
 
-vector<ContactListEntry> loadFromFile();
+vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToVector(string fileLine);
 void mainMenu();
 int chooseOption(int numberOfOptions);
@@ -45,7 +45,7 @@ void editEntry(vector<ContactListEntry>& contactList);
 ContactListEntry editGivenContact(ContactListEntry contactToEdit);
 void editInFile(ContactListEntry contactToEdit);
 
-vector<ContactListEntry> loadFromFile()
+vector<ContactListEntry> loadContactListFromFile()
 {
     vector<ContactListEntry> contactList;
     fstream file;
@@ -484,7 +484,7 @@ void editInFile(ContactListEntry contactToEdit) {
 
 int main() {
     vector<ContactListEntry> contactList;
-    contactList = loadFromFile();
+    contactList = loadContactListFromFile();
     int chosenOption;
 
     while (1) {
