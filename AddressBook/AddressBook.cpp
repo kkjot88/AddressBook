@@ -31,7 +31,7 @@ bool checkInputForMenus(string chosenOption, int numberOfOptions);
 vector<User> loadUsersListFromFile();
 User splitFileLineToUserVector(string fileLine);
 void loginScreenMenu();
-bool loginScreen(vector<User>* usersList);
+int loginScreen(vector<User>* usersList);
 int checkUsersNameAndPassword(vector<User>* usersList);
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToEntryVector(string fileLine);
@@ -128,7 +128,7 @@ void loginScreenMenu() {
     cout << "3. Exit\n";
 }
 
-bool loginScreen(vector<User>* usersList) {
+int loginScreen(vector<User>* usersList) {
     
     int chosenOption;
     bool isUserSignedIn = false;
@@ -147,7 +147,7 @@ bool loginScreen(vector<User>* usersList) {
         } break;
         case 3:
         {
-            return false;
+            return 0;
         }
         }
     }
@@ -157,11 +157,35 @@ int checkUsersNameAndPassword(vector<User>* usersList) {
 
     string username;
     string password;
+    int listSize = usersList->size();
 
-    cout << "Username: ";
-    getline(cin, username);
-    cout << "Password: ";
-    getline(cin, password);
+    while (true) {
+        cout << "Username: ";
+        getline(cin, username);
+
+        for (int i = 0; i < listSize; i++) {
+            if (username != usersList[i]->name) {
+                cout << "User with that name does not exist, try again.\n";
+            }
+            else break;
+        }
+    }
+
+    while (true) {
+        cout << "Password: ";
+        getline(cin, password);
+
+        for (int i = 0; i < listSize; i++) {
+            if (name == usersList[i]->name && password == usersList[i]->password) {
+                "Correct username nad passowrd. User is now logged in";
+            }
+            else break;
+        }
+    }
+    
+    
+
+    
     
     
     
