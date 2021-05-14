@@ -1,13 +1,15 @@
-1. Return type bool
+1. Return type **int
 2. first call loginScreenMenu() - func just to display user options
 3. ask for input:
 -1. sign in,
 -2. sign up,
 -3. exit,
-4. if -1 call fuction for signing in with return type bool
-5. if true pass true to return of loginScreenMenu
-6. if false let user try again.
+4. if -1 call fuction for signing in with return type **int
+5. if **return number > 0 pass true to return of loginScreenMenu
+6. if **return number = 0 let user try again.
 7. if -2 call functions for signing up which will add User to userList via pointers and store changes in file.
-8. if -3 pass false to return of loginScreenMenu
+8. if -3 pass **number 0 to return of loginScreenMenu
 
-*probably will have to add -3 changer user name -4 change user password -5 exit shifted here.
+*probably will have to add -3 change user name -4 change user password -5 exit shifted here.
+
+**return type has to be int and function needs to return user Id so we can pass it further into AddressBook
