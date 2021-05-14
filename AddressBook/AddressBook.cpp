@@ -27,8 +27,9 @@ struct User {
 };
 
 vector<User> loadUsersListFromFile();
+User splitFileLineToUserVector(string fileLine);
 vector<ContactListEntry> loadContactListFromFile();
-ContactListEntry splitFileLineToVector(string fileLine);
+ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
 int chooseOption(int numberOfOptions);
 bool checkInputForMenus(string chosenOption, int numberOfOptions);
@@ -56,11 +57,34 @@ vector<User> loadUsersListFromFile()
     if (file.good() == 0) return usersList;
 
     while (getline(file, fileLine)) {
-        usersList.push_back(splitFileLineToVector(fileLine));
+        usersList.push_back(splitFileLineToUserVector(fileLine));
     }
 
     file.close();
     return usersList;
+}
+
+User splitFileLineToUserVector(string fileLine) {
+    int lineLength = fileLine.length();
+    string tempInfoArray[3];
+    int tempArrayIndex = 0;
+    User newUser;
+
+    for (int i = 0; i < lineLength; i++) {
+        if (fileLine[i] == 124) {
+            tempInfoArray[tempArrayIndex] = fileLine.substr(0, i);
+            fileLine = fileLine.substr(i + 1, fileLine.length());
+            tempArrayIndex++;
+            lineLength = fileLine.length();
+            i = 0;
+        }
+    }
+
+    newUser.id = stoi(tempInfoArray[0]);
+    newUser.name = tempInfoArray[1];
+    newUser.password = tempInfoArray[2];    
+
+    return newUser;
 }
 
 vector<ContactListEntry> loadContactListFromFile()
@@ -73,14 +97,14 @@ vector<ContactListEntry> loadContactListFromFile()
     if (file.good() == 0) return contactList;
 
     while (getline(file, fileLine)) {
-        contactList.push_back(splitFileLineToVector(fileLine));
+        contactList.push_back(splitFileLineToEntryVector(fileLine));
     }
 
     file.close();
     return contactList;
 }
 
-ContactListEntry splitFileLineToVector(string fileLine) {
+ContactListEntry splitFileLineToEntryVector(string fileLine) {
     int lineLength = fileLine.length();
     string tempInfoArray[6];
     int tempArrayIndex = 0;
@@ -159,7 +183,7 @@ int getNewId()
 
     while (getline(file, fileLine))
     {
-        ContactListEntry tempEntry = splitFileLineToVector(fileLine);
+        ContactListEntry tempEntry = splitFileLineToEntryVector(fileLine);
         listOfIds.push_back(tempEntry.id);
     }
     if (listOfIds.size() == 0) {
@@ -365,7 +389,7 @@ void deleteFromFile(int entryId)
 
     while (getline(oldFile, currentOldFileLine))
     {
-        ContactListEntry tempEntry = splitFileLineToVector(currentOldFileLine);
+        ContactListEntry tempEntry = splitFileLineToEntryVector(currentOldFileLine);
         if (tempEntry.id != entryId)
         {
             newFile << currentOldFileLine << endl;
@@ -484,7 +508,7 @@ void editInFile(ContactListEntry contactToEdit) {
 
     while (getline(oldFile, currentOldFileLine))
     {
-        ContactListEntry tempEntry = splitFileLineToVector(currentOldFileLine);
+        ContactListEntry tempEntry = splitFileLineToEntryVector(currentOldFileLine);
         if (tempEntry.id == contactToEdit.id) {
             newFile << mergeVectorToFileLine(contactToEdit) << endl;
         }
