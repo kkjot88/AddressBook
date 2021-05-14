@@ -28,6 +28,7 @@ struct User {
 
 vector<User> loadUsersListFromFile();
 User splitFileLineToUserVector(string fileLine);
+void loginScreenMenu();
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
@@ -85,6 +86,14 @@ User splitFileLineToUserVector(string fileLine) {
     newUser.password = tempInfoArray[2];    
 
     return newUser;
+}
+
+void loginScreenMenu() {
+    system("cls");
+    cout << "login Screen: \n";
+    cout << "1. Sign in\n";
+    cout << "2. Sign up\n";    
+    cout << "3. Exit\n";
 }
 
 vector<ContactListEntry> loadContactListFromFile()

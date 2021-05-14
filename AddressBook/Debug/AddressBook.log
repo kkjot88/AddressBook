@@ -1,0 +1,6 @@
+﻿  AddressBook.cpp
+C:\Users\kjanoszek\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(257,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kjanoszek\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(285,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kjanoszek\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(306,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kjanoszek\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(331,23): warning C4018: '<': signed/unsigned mismatch
+  AddressBook.vcxproj -> C:\Users\kjanoszek\Desktop\ABproj\AddressBook\AddressBook\Debug\AddressBook.exe
