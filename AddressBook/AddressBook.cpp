@@ -32,6 +32,7 @@ vector<User> loadUsersListFromFile();
 User splitFileLineToUserVector(string fileLine);
 void loginScreenMenu();
 bool loginScreen(vector<User>* usersList);
+int checkUsersNameAndPassword(vector<User>* usersList);
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
@@ -150,6 +151,23 @@ bool loginScreen(vector<User>* usersList) {
         }
         }
     }
+}
+
+int checkUsersNameAndPassword(vector<User>* usersList) {
+
+    string username;
+    string password;
+
+    cout << "Username: ";
+    getline(cin, username);
+    cout << "Password: ";
+    getline(cin, password);
+    
+    
+    
+    
+    
+    return false;
 }
 
 vector<ContactListEntry> loadContactListFromFile()
