@@ -26,14 +26,15 @@ struct User {
     string password;
 };
 
+int chooseOption(int numberOfOptions);
+bool checkInputForMenus(string chosenOption, int numberOfOptions);
 vector<User> loadUsersListFromFile();
 User splitFileLineToUserVector(string fileLine);
 void loginScreenMenu();
+bool loginScreen(vector<User>* usersList);
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
-int chooseOption(int numberOfOptions);
-bool checkInputForMenus(string chosenOption, int numberOfOptions);
 void AddressBook();
 int getNewId();
 ContactListEntry addEntry(int newId);
@@ -48,6 +49,35 @@ void showContactToEditOrDelete(ContactListEntry entryToShow);
 void editEntry(vector<ContactListEntry>& contactList);
 ContactListEntry editGivenContact(ContactListEntry contactToEdit);
 void editInFile(ContactListEntry contactToEdit);
+
+int chooseOption(int numberOfOptions)
+{
+    string chosenOption;
+    bool correctInput = false;
+    cout << endl;
+    cout << "Choose action: ";
+    while (!correctInput)
+    {
+        getline(cin, chosenOption);
+        correctInput = checkInputForMenus(chosenOption, numberOfOptions);
+        if (correctInput == 0)
+        {
+            cout << "\33[A" << "\33[2K" << "\r";
+            cout << "Wrong input! Try again: ";
+        }
+    }
+    return stoi(chosenOption);
+}
+
+bool checkInputForMenus(string chosenOption, int numberOfOptions)
+{
+    int len = chosenOption.length();
+    if (len > 1) return 0;
+    if (chosenOption[0] >= 49 &&
+        chosenOption[0] < 49 + numberOfOptions)
+        return 1;
+    else return 0;
+}
 
 vector<User> loadUsersListFromFile()
 {
@@ -95,6 +125,31 @@ void loginScreenMenu() {
     cout << "1. Sign in\n";
     cout << "2. Sign up\n";    
     cout << "3. Exit\n";
+}
+
+bool loginScreen(vector<User>* usersList) {
+    
+    int chosenOption;
+    bool isUserSignedIn = false;
+
+    while (1) {
+        loginScreenMenu();
+        chosenOption = chooseOption(3);
+        switch (chosenOption) {
+        case 1:
+        {
+            
+        } break;
+        case 2:
+        {
+
+        } break;
+        case 3:
+        {
+            return false;
+        }
+        }
+    }
 }
 
 vector<ContactListEntry> loadContactListFromFile()
@@ -150,35 +205,6 @@ void mainMenu() {
     cout << "5. Delete contact\n";
     cout << "6. Edit contact\n";
     cout << "7. Exit\n";
-}
-
-int chooseOption(int numberOfOptions)
-{
-    string chosenOption;
-    bool correctInput = false;
-    cout << endl;
-    cout << "Choose action: ";
-    while (!correctInput)
-    {
-        getline(cin, chosenOption);
-        correctInput = checkInputForMenus(chosenOption, numberOfOptions);
-        if (correctInput == 0)
-        {
-            cout << "\33[A" << "\33[2K" << "\r";
-            cout << "Wrong input! Try again: ";
-        }
-    }
-    return stoi(chosenOption);
-}
-
-bool checkInputForMenus(string chosenOption, int numberOfOptions)
-{
-    int len = chosenOption.length();
-    if (len > 1) return 0;
-    if (chosenOption[0] >= 49 &&
-        chosenOption[0] < 49 + numberOfOptions)
-        return 1;
-    else return 0;
 }
 
 void AddressBook() {
