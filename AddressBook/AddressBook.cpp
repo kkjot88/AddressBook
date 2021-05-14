@@ -34,6 +34,7 @@ ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
 int chooseOption(int numberOfOptions);
 bool checkInputForMenus(string chosenOption, int numberOfOptions);
+void AddressBook();
 int getNewId();
 ContactListEntry addEntry(int newId);
 void saveToFile(ContactListEntry newContactListEntry);
@@ -178,6 +179,50 @@ bool checkInputForMenus(string chosenOption, int numberOfOptions)
         chosenOption[0] < 49 + numberOfOptions)
         return 1;
     else return 0;
+}
+
+void AddressBook() {
+    vector<ContactListEntry> contactList;
+    contactList = loadContactListFromFile();
+    int chosenOption;
+
+    while (1) {
+        mainMenu();
+        chosenOption = chooseOption(7);
+        switch (chosenOption) {
+        case 1:
+        {
+            int newId = getNewId();
+            contactList.push_back(addEntry(newId));
+            cin.ignore();
+        } break;
+        case 2:
+        {
+            searchByName(contactList);
+            cin.ignore();
+        } break;
+        case 3:
+        {
+            searchBySurname(contactList);
+            cin.ignore();
+        } break;
+        case 4:
+        {
+            wholeList(contactList);
+            cin.ignore();
+        } break;
+        case 5:
+        {
+            deleteEntry(contactList);
+            cin.ignore();
+        } break;
+        case 6:
+        {
+            editEntry(contactList);
+        } break;
+        case 7: exit(0);
+        }
+    }
 }
 
 int getNewId()
@@ -534,46 +579,6 @@ void editInFile(ContactListEntry contactToEdit) {
 }
 
 int main() {
-    vector<ContactListEntry> contactList;
-    contactList = loadContactListFromFile();
-    int chosenOption;
-
-    while (1) {
-        mainMenu();
-        chosenOption = chooseOption(7);
-        switch (chosenOption) {
-        case 1:
-        {
-            int newId = getNewId();
-            contactList.push_back(addEntry(newId));
-            cin.ignore();
-        } break;
-        case 2:
-        {
-            searchByName(contactList);
-            cin.ignore();
-        } break;
-        case 3:
-        {
-            searchBySurname(contactList);
-            cin.ignore();
-        } break;
-        case 4:
-        {
-            wholeList(contactList);
-            cin.ignore();
-        } break;
-        case 5:
-        {
-            deleteEntry(contactList);
-            cin.ignore();
-        } break;
-        case 6:
-        {
-            editEntry(contactList);
-        } break;
-        case 7: exit(0);
-        }
-    }
+    
     return 0;
 }
