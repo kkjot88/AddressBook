@@ -131,7 +131,7 @@ void loginScreenMenu() {
 int loginScreen(vector<User>& usersList) {
     
     int chosenOption;
-    bool isUserSignedIn = false;
+    int isUserSignedIn = 0;
 
     while (1) {
         loginScreenMenu();
@@ -139,7 +139,7 @@ int loginScreen(vector<User>& usersList) {
         switch (chosenOption) {
         case 1:
         {
-            
+            isUserSignedIn = checkUsersNameAndPassword(usersList);
         } break;
         case 2:
         {
@@ -186,7 +186,9 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
     
 
     
-    
+    p;
+
+    p;
     
     
     
@@ -648,5 +650,9 @@ void editInFile(ContactListEntry contactToEdit) {
 
 int main() {
     
+    vector<User> usersList;
+    usersList = loadUsersListFromFile();
+    loginScreen(usersList);
+
     return 0;
 }
