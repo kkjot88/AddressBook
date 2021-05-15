@@ -159,27 +159,37 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
     string password;
     int listSize = usersList.size();
 
-    while (true) {
+    bool isUsernameCorrect = false;
+    bool isPasswordCorrect = false;
+
+    while (!isUsernameCorrect) {
         cout << "Username: ";
         getline(cin, username);
 
         for (int i = 0; i < listSize; i++) {
             if (username != usersList[i].name) {
                 cout << "User with that name does not exist, try again.\n";
+                break;
             }
-            else break;
+            else {
+                isUsernameCorrect = true;
+                break;
+            }
         }
     }
 
-    while (true) {
+    while (!isPasswordCorrect) {
         cout << "Password: ";
         getline(cin, password);
 
         for (int i = 0; i < listSize; i++) {
             if (username == usersList[i].name && password == usersList[i].password) {
-                "Correct username nad passowrd. User is now logged in";
+                cout << "Correct username nad password. User is now logged in." << endl;
+                isPasswordCorrect = true;
             }
-            else break;
+            else if (i=listSize-1) {
+                cout << "Incorrect password, try again." << endl;                
+            }
         }
     }
     
