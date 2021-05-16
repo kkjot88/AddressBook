@@ -33,13 +33,17 @@ User splitFileLineToUserVector(string fileLine);
 void loginScreenMenu();
 int loginScreen(vector<User>& usersList);
 int checkUsersNameAndPassword(vector<User>& usersList);
+void SignUp(vector<User>& usersList);
+int getNewUserId();
+void saveUserToFile(User newUser);
+string mergeUserToFileLine(User newUser);
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
 void AddressBook();
-int getNewId();
+int getNewEntryId();
 ContactListEntry addEntry(int newId);
-void saveToFile(ContactListEntry newContactListEntry);
+void saveEntryToFile(ContactListEntry newContactListEntry);
 string mergeVectorToFileLine(ContactListEntry newEntry);
 void searchByName(vector<ContactListEntry> contactList);
 void searchBySurname(vector<ContactListEntry> contactList);
@@ -131,7 +135,7 @@ void loginScreenMenu() {
 int loginScreen(vector<User>& usersList) {
     
     int chosenOption;
-    int isUserSignedIn = 0;
+    int loggedUserId = 0;
 
     while (1) {
         loginScreenMenu();
@@ -139,11 +143,14 @@ int loginScreen(vector<User>& usersList) {
         switch (chosenOption) {
         case 1:
         {
-            isUserSignedIn = checkUsersNameAndPassword(usersList);
+            loggedUserId = checkUsersNameAndPassword(usersList);
+            if (loggedUserId > 0) {
+                return loggedUserId;
+            }
         } break;
         case 2:
         {
-
+            SignUp(usersList);
         } break;
         case 3:
         {
@@ -161,6 +168,7 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
 
     bool isUsernameCorrect = false;
     bool isPasswordCorrect = false;
+    int loggedUserId = 0;
 
     while (!isUsernameCorrect) {
         cout << "Username: ";
@@ -186,24 +194,80 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
             if (username == usersList[i].name && password == usersList[i].password) {
                 cout << "Correct username nad password. User is now logged in." << endl;
                 isPasswordCorrect = true;
+                loggedUserId = usersList[i].id;
+                break;
             }
             else if (i=listSize-1) {
                 cout << "Incorrect password, try again." << endl;                
             }
         }
+    }        
+    
+    return loggedUserId;
+}
+
+void SignUp(vector<User>& usersList) {
+
+    User newUser;
+
+    cout << endl << "New users name: ";
+    getline(cin, newUser.name);
+    cout << "New users password: ";
+    getline(cin, newUser.password);
+
+    cout << endl << "New user '" << newUser.name << "' added succsefully. Press enter to return to login screen . . .";
+    cin.get();
+
+    newUser.id = getNewUserId();
+    saveUserToFile(newUser);
+    usersList.push_back(newUser);
+}
+
+int getNewUserId()
+{
+    vector<User> usersList;
+    fstream file;
+    file.open("usersList.txt", ios::in);
+    if (file.good() == 0) return 1;
+
+    vector<int> listOfIds;
+    string fileLine;
+
+    while (getline(file, fileLine))
+    {
+        User tempEntry = splitFileLineToUserVector(fileLine);
+        listOfIds.push_back(tempEntry.id);
     }
-    
-    
+    if (listOfIds.size() == 0) {
+        return 1;
+    }
+    int newId = listOfIds[listOfIds.size() - 1] + 1;
 
-    
-    p;
+    return newId;
+}
 
-    p;
-    
-    
-    
-    
-    return false;
+void saveUserToFile(User newUser) {
+    fstream file;
+    file.open("usersList.txt", ios::out | ios::app);
+
+    file << mergeUserToFileLine(newUser) << endl;
+
+    file.close();
+}
+
+string mergeUserToFileLine(User newUser) {
+    string tempInfoArray[3];
+    string newFileLine;
+
+    tempInfoArray[0] = to_string(newUser.id);
+    tempInfoArray[1] = newUser.name;
+    tempInfoArray[2] = newUser.password;
+
+    for (int i = 0; i < 3; i++) {
+        newFileLine = newFileLine + tempInfoArray[i] + "|";
+    }
+
+    return newFileLine;
 }
 
 vector<ContactListEntry> loadContactListFromFile()
@@ -272,7 +336,7 @@ void AddressBook() {
         switch (chosenOption) {
         case 1:
         {
-            int newId = getNewId();
+            int newId = getNewEntryId();
             contactList.push_back(addEntry(newId));
             cin.ignore();
         } break;
@@ -305,7 +369,7 @@ void AddressBook() {
     }
 }
 
-int getNewId()
+int getNewEntryId()
 {
     vector<ContactListEntry> contactList;
     fstream file;
@@ -344,15 +408,15 @@ ContactListEntry addEntry(int newId)
     cout << "Address: ";
     getline(cin, newContactListEntry.address);
     cout << endl;
-    cout << "New entry added. Press any key to return to main menu . . .";
+    cout << "New entry added. Press enter to return to main menu . . .";
     newContactListEntry.id = newId;
 
-    saveToFile(newContactListEntry);
+    saveEntryToFile(newContactListEntry);
 
     return newContactListEntry;
 }
 
-void saveToFile(ContactListEntry newContactListEntry) {
+void saveEntryToFile(ContactListEntry newContactListEntry) {
     fstream file;
     file.open("contactlist.txt", ios::out | ios::app);
 
@@ -549,7 +613,7 @@ void editEntry(vector<ContactListEntry>& contactList) {
     int listSize = contactList.size();
     if (listSize == 0) {
         cout << endl;
-        cout << "Contacts list is empty. Press any key to return to main menu . . .\n";
+        cout << "Contacts list is empty. Press enter to return to main menu . . .\n";
         cin.ignore();
         return;
     }
@@ -572,7 +636,7 @@ void editEntry(vector<ContactListEntry>& contactList) {
 
     if (listIndexToEdit == 0) {
         cout << endl;
-        cout << "Contact with this Id does not exist. Press any key to return to main menu . . .\n";
+        cout << "Contact with this Id does not exist. Press enter to return to main menu . . .\n";
         cin.get(); cin.get();
         return;
     }
