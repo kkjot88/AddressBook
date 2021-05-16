@@ -33,14 +33,14 @@ User splitFileLineToUserVector(string fileLine);
 void loginScreenMenu();
 int loginScreen(vector<User>& usersList);
 int checkUsersNameAndPassword(vector<User>& usersList);
-void SignUp(vector<User>& usersList);
+void signUp(vector<User>& usersList);
 int getNewUserId();
 void saveUserToFile(User newUser);
 string mergeUserToFileLine(User newUser);
 vector<ContactListEntry> loadContactListFromFile();
 ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
-void AddressBook();
+void AddressBook(int loggedUserId);
 int getNewEntryId();
 ContactListEntry addEntry(int newId);
 void saveEntryToFile(ContactListEntry newContactListEntry);
@@ -150,7 +150,7 @@ int loginScreen(vector<User>& usersList) {
         } break;
         case 2:
         {
-            SignUp(usersList);
+            signUp(usersList);
         } break;
         case 3:
         {
@@ -206,7 +206,7 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
     return loggedUserId;
 }
 
-void SignUp(vector<User>& usersList) {
+void signUp(vector<User>& usersList) {
 
     User newUser;
 
@@ -325,7 +325,7 @@ void mainMenu() {
     cout << "7. Exit\n";
 }
 
-void AddressBook() {
+void AddressBook(int loggedUserId) {
     vector<ContactListEntry> contactList;
     contactList = loadContactListFromFile();
     int chosenOption;
@@ -725,8 +725,14 @@ void editInFile(ContactListEntry contactToEdit) {
 int main() {
     
     vector<User> usersList;
+    int loggedUserId = 0;
+
     usersList = loadUsersListFromFile();
-    loginScreen(usersList);
+    loggedUserId = loginScreen(usersList);
+
+    if (loggedUserId > 0) {
+        AddressBook(loggedUserId);
+    }
 
     return 0;
 }
