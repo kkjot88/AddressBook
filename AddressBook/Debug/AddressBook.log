@@ -1,6 +1,6 @@
 ﻿  AddressBook.cpp
-C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(475,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(503,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(524,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(549,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(477,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(505,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(526,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\AddressBook.cpp(551,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
   AddressBook.vcxproj -> C:\Users\karol\Desktop\ABproj\AddressBook\AddressBook\Debug\AddressBook.exe

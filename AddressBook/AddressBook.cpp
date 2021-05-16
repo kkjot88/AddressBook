@@ -44,7 +44,7 @@ ContactListEntry splitFileLineToEntryVector(string fileLine);
 void mainMenu();
 void AddressBook(int loggedUserId);
 int getNewEntryId();
-ContactListEntry addEntry(int newId);
+ContactListEntry addEntry(int newId, int loggedUserId);
 void saveEntryToFile(ContactListEntry newContactListEntry);
 string mergeVectorToFileLine(ContactListEntry newEntry);
 void searchByName(vector<ContactListEntry> contactList);
@@ -195,6 +195,7 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
         for (int i = 0; i < listSize; i++) {
             if (username == usersList[i].name && password == usersList[i].password) {
                 cout << endl << "Correct username nad password. User is now logged in." << endl;
+                cout << "Press enter to continue . . .";
                 cin.get();
                 isPasswordCorrect = true;
                 loggedUserId = usersList[i].id;
@@ -356,7 +357,7 @@ void AddressBook(int loggedUserId) {
         case 1:
         {
             int newId = getNewEntryId();
-            contactList.push_back(addEntry(newId));
+            contactList.push_back(addEntry(newId, loggedUserId));
             cin.ignore();
         } break;
         case 2:
@@ -411,7 +412,7 @@ int getNewEntryId()
     return newId;
 }
 
-ContactListEntry addEntry(int newId)
+ContactListEntry addEntry(int newId, int loggedUserId)
 {
     ContactListEntry newContactListEntry;
 
@@ -429,7 +430,8 @@ ContactListEntry addEntry(int newId)
     cout << endl;
     cout << "New entry added. Press enter to return to main menu . . .";
     newContactListEntry.id = newId;
-
+    newContactListEntry.loggedUserId = loggedUserId;
+    
     saveEntryToFile(newContactListEntry);
 
     return newContactListEntry;
