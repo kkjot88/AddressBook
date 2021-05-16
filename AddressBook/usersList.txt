@@ -1,6 +1,2 @@
 1|xxx|xxx|
 2|yyy|yyy|
-3|zzz|zzz|
-4|kkk|kkk|
-5|jjj|jjj|
-6|ggg|ggg|

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+#undef max
 #define p system("pause")
 #define c cout <<
 #define e << endl
@@ -140,7 +141,7 @@ int loginScreen(vector<User>& usersList) {
     int loggedUserId = 0;
 
     while (1) {
-        loginScreenMenu();
+        loginScreenMenu();        
         chosenOption = chooseOption(3);
         cout << endl;
         switch (chosenOption) {
@@ -179,11 +180,16 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
 
         for (int i = 0; i < listSize; i++) {
             if (username != usersList[i].name && i == listSize - 1) {
-                cout << "User with that name does not exist, try again.\n";                
+                cout << "User with that name does not exist, try again. Enter username: 0 to abort.\n";                
             }
             else if (username == usersList[i].name) {
                 isUsernameCorrect = true;
                 break;
+            }
+            else if (username == "0") {
+                cout << endl << "Logging in aborted. Press enter to return to login screen . . .";
+                cin.get();
+                return -1;
             }
         }
     }
@@ -202,7 +208,12 @@ int checkUsersNameAndPassword(vector<User>& usersList) {
                 break;
             }
             else if (i == listSize-1) {
-                cout << "Incorrect password, try again." << endl;                
+                cout << "Incorrect password, try again. Enter password: 0 to abort." << endl;                
+            }
+            else if (password == "0") {
+                cout << endl << "Logging in aborted. Press enter to return to login screen . . .";
+                cin.get();
+                return -1;
             }
         }
     }        
@@ -214,7 +225,7 @@ void signUp(vector<User>& usersList) {
 
     User newUser;
 
-    cout << endl << "New users name: ";
+    cout << "New users name: ";
     getline(cin, newUser.name);
     cout << "New users password: ";
     getline(cin, newUser.password);
@@ -342,7 +353,8 @@ void mainMenu() {
     cout << "4. Contacts list\n";
     cout << "5. Delete contact\n";
     cout << "6. Edit contact\n";
-    cout << "7. Exit\n";
+    cout << "7. Log out\n";
+    cout << "8. Exit\n";
 }
 
 void AddressBook(int loggedUserId) {
@@ -351,8 +363,8 @@ void AddressBook(int loggedUserId) {
     int chosenOption;
 
     while (1) {
-        mainMenu();
-        chosenOption = chooseOption(7);
+        mainMenu();             
+        chosenOption = chooseOption(8);
         switch (chosenOption) {
         case 1:
         {
@@ -384,7 +396,11 @@ void AddressBook(int loggedUserId) {
         {
             editEntry(contactList);
         } break;
-        case 7: exit(0);
+        case 7:
+        {
+            return;
+        } break;
+        case 8: exit(0);
         }
     }
 }
@@ -569,7 +585,7 @@ void deleteEntry(vector<ContactListEntry>& contactList) {
         int confirmationKey;
         cout << endl;
         cout << "Are You sure You want to delete above contact?\n";
-        cout << "Press 't' to confirm. Press enter to return to main menu . . .\n";
+        cout << "Type 't' and press enter to confirm. Press enter to return to main menu . . .\n";
         cin.ignore();
         confirmationKey = getchar();
         if ((char)confirmationKey == 't') {
@@ -745,17 +761,17 @@ void editInFile(ContactListEntry contactToEdit) {
 }
 
 int main() {
-    
+    int loggedUserId = -1;
     vector<User> usersList;
-    int loggedUserId = 0;
-
     usersList = loadUsersListFromFile();
-    
-    loggedUserId = loginScreen(usersList);
 
-    if (loggedUserId > 0) {
-        AddressBook(loggedUserId);
-    }
+    while (loggedUserId != 0) {        
+        loggedUserId = loginScreen(usersList);
+
+        if (loggedUserId > 0) {
+            AddressBook(loggedUserId);
+        }        
+    }   
 
     return 0;
 }
